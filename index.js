@@ -171,6 +171,61 @@ class LinkedList {
 
         return result += "null";
     }
+
+    //Inert new node with provided vallue at given index
+    insertAt(value, index) {
+        if (index < 0 || index > this.length) {
+            return "Index out of range";
+        } 
+
+        const newNode = new Node(value);
+
+        let currentIndex = 0;
+        let current = this.head;
+        
+        if (index === 0) {
+            let next = this.head;
+            this.head = newNode;
+            this.head.next = next;
+        } else {
+            while (currentIndex < index - 1) {
+                current = current.next;
+                currentIndex++;
+            }
+        
+            let next = current.next;
+            current.next = newNode;
+            current.next.next = next;
+        }
+
+        this.length++;
+    }
+
+    //Remove a node at given index
+    removeAt(index) {
+        if (this.length === 0 || index < 0 || index > this.length - 1) {
+            return "Index out of range"
+        }
+
+        let current = this.head;
+
+        if (index === 0) {
+            this.head = current.next;
+        } else {
+
+            let previous = null;
+            let currentIndex = 0;
+
+            while (currentIndex < index) {
+                previous = current;
+                current = current.next;
+                currentIndex++;
+            }
+    
+            previous.next = current.next;
+        }
+        this.length--;
+    }
 }
 
 let myLinkedList = new LinkedList();
@@ -188,3 +243,17 @@ myLinkedList.pop();
 console.log(myLinkedList.toString());
 console.log(myLinkedList.contains(200));
 console.log(myLinkedList.find(300));
+myLinkedList.insertAt(500, 0);
+console.log(myLinkedList.toString());
+console.log(myLinkedList.insertAt(600, 4));
+console.log(myLinkedList.toString());
+console.log(myLinkedList.insertAt(700, 6));
+console.log(myLinkedList.toString());
+console.log(myLinkedList.removeAt(0));
+console.log(myLinkedList.toString());
+console.log(myLinkedList.removeAt(2));
+console.log(myLinkedList.toString());
+console.log(myLinkedList.removeAt(2));
+console.log(myLinkedList.toString());
+
+
