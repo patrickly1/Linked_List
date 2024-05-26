@@ -73,6 +73,88 @@ class LinkedList {
         return current;
     }
 
+    //Returns node at given index
+    at(index) {
+        if (index > this.length - 1 || index < 0) {
+            return "Index out of range";
+        } else {
+            let count = 0;
+            let current = this.head;
+
+            for (let i = 0; i < this.length; i++) {
+                if (count === index) {
+                    return current.value;
+                } else {
+                    current = current.next;
+                    count++;
+                }
+            }
+        }
+    }
+
+    //Removes last element from list
+    pop() {
+        if (this.length === 0) {
+            return "List is empty";
+        }
+
+        if (this.next === null) {
+            this.head = null;
+        } else {
+            let current = this.head;
+            let previous = null;
+
+            while (current.next !== null) {
+                previous = current;
+                current = current.next;
+            }
+
+            previous.next = null;
+        }
+
+        this.length--;
+    }
+
+    //Returns true if the passed value is in the list, otherwise return false
+    contains(value) {
+        if (this.length === 0) {
+            return false;
+        } 
+
+        let current = this.head;
+
+        while (current !== null) {
+            if (current.value === value) {
+                return true;
+            } else {
+                current = current.next;
+            }
+        }
+
+        return false;
+    }
+
+    //Return index of node containing the value, or null if absent
+    find(value) {
+        if (this.head === null) {
+            return null;
+        }
+
+        let current = this.head;
+        let index = -1;
+
+        while (current !== null) {
+            index++;
+            if (current.value === value) {
+                return index;
+            } else {
+                current = current.next;
+            }
+        }
+
+        return null;
+    }
+
     //Print my LinkedList objects as strings
     toString() {
         if (this.head === null) {
@@ -96,7 +178,13 @@ myLinkedList.append(100);
 myLinkedList.append(200);
 myLinkedList.append(300);
 myLinkedList.prepend(400);
-console.log(myLinkedList.size());
-console.log(myLinkedList.getHead());
-console.log(myLinkedList.getTail());
+console.log("size", myLinkedList.size());
+console.log("head", myLinkedList.getHead());
+console.log("tail", myLinkedList.getTail());
 console.log(myLinkedList.toString());
+console.log("index", myLinkedList.at(2));
+console.log("pop");
+myLinkedList.pop();
+console.log(myLinkedList.toString());
+console.log(myLinkedList.contains(200));
+console.log(myLinkedList.find(300));
